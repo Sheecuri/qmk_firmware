@@ -19,36 +19,45 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 
+enum layer_names {
+    _BASE,
+    _NAV,
+    _FUNC,
+    _SYMB,
+    _GAME,
+    _NUM,
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  // ALPHA
-  [0] = LAYOUT_split_3x6_3(
+  // BASE
+  [_BASE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                             ,-----------------------------------------------------.
-      XXXXXXX,  KC_Q,                 KC_W,         KC_F,         KC_P, KC_B,               KC_J,         KC_L,         KC_U,            KC_Y,          KC_SCLN,    XXXXXXX,
+      XXXXXXX,  KC_Q,                 KC_W,         KC_F,         KC_P, KC_B,               KC_J,         KC_L,         KC_U,            KC_Y,          KC_COLN,    XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                             |--------+--------+--------+--------+--------+--------|
-      XXXXXXX,  LGUI_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LSFT_T(KC_T), KC_G,               KC_M, RSFT_T(KC_N), RCTL_T(KC_E),    LALT_T(KC_I),     RGUI_T(KC_O),    XXXXXXX,
+      XXXXXXX,  LGUI_T(KC_A), LALT_T(KC_R), LCTL_T(KC_S), LSFT_T(KC_T), KC_G,               KC_M, LSFT_T(KC_N), LCTL_T(KC_E),    LALT_T(KC_I),     LGUI_T(KC_O),    XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                             |--------+--------+--------+--------+--------+--------|
       XXXXXXX,  RALT_T(KC_Z),         KC_X,         KC_C,         KC_D, KC_V,               KC_K,         KC_H,      KC_COMM,          KC_DOT,  RALT_T(KC_SLSH),    XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|            |--------+--------+--------+--------+--------+--------+--------|
-                    LT(0,KC_NO),   LT(1, KC_BSPC),  LT(2, KC_TAB),           LT(3, KC_ENT),   LT(4, KC_SPC), KC_DEL
+              KC_ESC,  LT(_NAV, KC_BSPC), LT(_FUNC, KC_TAB),        LT(_SYMB, KC_ENT), LT(_NUM, KC_SPC), KC_DEL
                                       //`--------------------------'            `--------------------------'
 
   ),
 
  // NAV
-   [1] = LAYOUT_split_3x6_3(
+   [_NAV] = LAYOUT_split_3x6_3(
  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, LCTL(KC_H), LCTL(KC_J), LCTL(KC_K), LCTL(KC_L), XXXXXXX,
  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_LEFT, KC_DOWN,    KC_UP,      KC_RGHT,    CW_TOGG,    XXXXXXX,
  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_HOME, KC_PGDN,    KC_PGUP,    KC_END,     KC_INS,     XXXXXXX,
+     XXXXXXX, TG(_GAME), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                    KC_HOME, LCTL(KC_D), LCTL(KC_U), KC_END,     KC_INS,     XXXXXXX,
  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                    _______, _______,  XXXXXXX,         KC_ENT,   LCTL(KC_E), _______
+                                    _______, _______, XXXXXXX,          _______, LCTL(KC_E), _______
                                      //`--------------------------'  `--------------------------'
  ),
 
- // FUN
-   [2] = LAYOUT_split_3x6_3(
+ // FUNC
+   [_FUNC] = LAYOUT_split_3x6_3(
  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      XXXXXXX,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, XXXXXXX,
  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -60,29 +69,42 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                      //`--------------------------'  `--------------------------'
  ),
 
- // SYM
-   [3] = LAYOUT_split_3x6_3(
+ // SYMB
+   [_SYMB] = LAYOUT_split_3x6_3(
  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      XXXXXXX, KC_AT,   KC_HASH, KC_LPRN, KC_RPRN, KC_QUES,                      KC_EXLM, KC_LCBR, KC_RCBR, KC_AMPR, KC_PIPE, XXXXXXX,
  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      XXXXXXX, KC_ASTR, KC_PERC, KC_MINS, KC_COLN, KC_DQUO,                      KC_QUOT, KC_SLSH, KC_BSLS, KC_UNDS, KC_SCLN, XXXXXXX,
  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     XXXXXXX, KC_DLR,  KC_PLUS, KC_LBRC, KC_RBRC, KC_EQL,                       KC_CIRC, KC_LABK, KC_RABK, KC_GRAVE,KC_TILD, XXXXXXX,
+     XXXXXXX, KC_DLR,  KC_PLUS, KC_LBRC, KC_RBRC, KC_EQL,                       KC_CIRC, KC_LABK, KC_RABK, KC_GRV,  KC_TILD, XXXXXXX,
  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                    _______, _______, _______,          XXXXXXX, XXXXXXX, _______
+                                    _______, _______, _______,          XXXXXXX, _______, _______
                                      //`--------------------------'  `--------------------------'
   ),
 
- // NUM
-   [4] = LAYOUT_split_3x6_3(
+ // GAME
+   [_GAME] = LAYOUT_split_3x6_3(
  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-     XXXXXXX,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX,
+     XXXXXXX, KC_T,    KC_Q,    KC_W,    KC_E,    KC_R,                         KC_TILD, XXXXXXX, KC_UP,   XXXXXXX, XXXXXXX,   XXXXXXX,
  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     XXXXXXX, KC_EQL, KC_PLUS, KC_MINS, KC_ASTR, KC_SLSH,                       _______, _______, _______, _______, _______, XXXXXXX,
+     XXXXXXX, KC_G,    KC_A,    KC_S,    KC_D,    KC_F,                         XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX,   XXXXXXX,
  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, KC_COMM,  KC_DOT, _______, XXXXXXX,
+     XXXXXXX, KC_Z,    KC_X,    KC_C,    KC_V,    KC_LSFT,                      XXXXXXX, XXXXXXX, XXXXXXX, TG(_GAME), KC_SLSH, XXXXXXX,
  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                    _______, _______, _______,          XXXXXXX, _______, _______
+                                    KC_LCTL, KC_SPC, LT(_NUM, KC_TAB),          KC_ESC, XXXXXXX, XXXXXXX
+                                     //`--------------------------'  `--------------------------'
+ ),
+
+ // NUM
+   [_NUM] = LAYOUT_split_3x6_3(
+ //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+     XXXXXXX, XXXXXXX, KC_1,    KC_2,    KC_3,    KC_SLSH,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+ //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+     XXXXXXX, XXXXXXX, KC_4,    KC_5,    KC_6,    KC_ASTR,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+ //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+     XXXXXXX, KC_0,    KC_7,    KC_8,    KC_9,    KC_PERC,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+ //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                    KC_PLUS, KC_BSPC, KC_MINS,          XXXXXXX, _______, _______
                                      //`--------------------------'  `--------------------------'
  )
 };
@@ -91,19 +113,45 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #ifdef OLED_ENABLE
 
 
-/* 32 * 32 logo */
+/* 32 * 32 pulsating heart logo */
+#define HEART_BIG_MS 250   // how long the "beat" frame shows
+#define HEART_SMALL_MS 650 // rest between beats
+
+static uint32_t heart_timer = 0;
+static bool     heart_big   = false;
+
 static void render_logo(void) {
-    static const char PROGMEM hexagram_logo[] = {
-	0x00, 0x00, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xc0, 0x70, 0x18, 0x06,
-    0x06, 0x18, 0x70, 0xc0, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x00, 0x00,
-    0x00, 0x00, 0x01, 0x07, 0x1f, 0x32, 0x66, 0xc4, 0x6c, 0x38, 0x1e, 0x37, 0x61, 0xc0, 0x80, 0x80,
-    0x80, 0x80, 0xc0, 0x61, 0x37, 0x1e, 0x38, 0x6c, 0xc4, 0x66, 0x32, 0x1f, 0x07, 0x01, 0x00, 0x00,
-    0x00, 0x00, 0x80, 0xe0, 0xf8, 0x4c, 0x66, 0x23, 0x36, 0x1c, 0x78, 0xec, 0x86, 0x03, 0x01, 0x01,
-    0x01, 0x01, 0x03, 0x86, 0xec, 0x78, 0x1c, 0x36, 0x23, 0x66, 0x4c, 0xf8, 0xe0, 0x80, 0x00, 0x00,
-    0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x03, 0x0e, 0x18, 0x60,
-    0x60, 0x18, 0x0e, 0x03, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00
-};
-    oled_write_raw_P(hexagram_logo, sizeof(hexagram_logo));
+    static const char PROGMEM heart[2][128] = {
+        /* 'small heart', 32x32px */
+        {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xfe, 0xfe, 0xff, 0xff, 0xff, 0xff, 0xfe, 0xfe,
+    0xfe, 0xfe, 0xff, 0xff, 0xff, 0xff, 0xfe, 0xfe, 0xf8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x07, 0x0f, 0x1f, 0x3f, 0x7f, 0xff, 0xff, 0xff,
+    0xff, 0xff, 0xff, 0x7f, 0x3f, 0x1f, 0x0f, 0x07, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01,
+    0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+        },
+        /* 'big heart', 32x32px */
+        {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0x80, 0x80,
+    0x80, 0x80, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0xfc, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfc, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x07, 0x0f, 0x3f, 0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x7f, 0x3f, 0x0f, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x03, 0x03, 0x07, 0x0f, 0x0f,
+    0x0f, 0x0f, 0x07, 0x03, 0x03, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+        }
+    };
+
+    if (timer_elapsed32(heart_timer) > (heart_big ? HEART_BIG_MS : HEART_SMALL_MS)) {
+        heart_timer = timer_read32();
+        heart_big   = !heart_big;
+    }
+    oled_set_cursor(0, 0);
+    oled_write_raw_P(heart[heart_big ? 1 : 0], sizeof(heart[0]));
 }
 
 
@@ -278,19 +326,22 @@ static void print_status_narrow(void) {
     oled_set_cursor(0, 6);
 
     switch (get_highest_layer(layer_state)) {
-        case 0:
-            oled_write("ALPHA", false);
+        case _BASE:
+            oled_write("BASE ", false);
             break;
-        case 1:
+        case _NAV:
             oled_write("-NAV-", false);
             break;
-        case 2:
-            oled_write("-FUN-", false);
+        case _FUNC:
+            oled_write("FUNC ", false);
             break;
-        case 3:
-            oled_write("-SYM-", false);
+        case _SYMB:
+            oled_write("SYMB ", false);
             break;
-        case 4:
+        case _GAME:
+            oled_write("GAME ", false);
+            break;
+        case _NUM:
             oled_write("-NUM-", false);
             break;
         default:
@@ -326,13 +377,6 @@ bool oled_task_user(void) {
 #endif
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT(0,KC_NO):
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_ESC);
-            } else if (record->event.pressed) {
-                tap_code16(KC_ENT);
-            }
-            return false;
         /* KEYBOARD PET STATUS START */
         case KC_LCTL:
         case KC_RCTL:
